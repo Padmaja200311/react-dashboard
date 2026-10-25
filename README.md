@@ -1,16 +1,83 @@
-# React + Vite
+# React Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive, multi-page React dashboard featuring authentication, user management, API integration, and dashboard statistics.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Authentication:** Login, logout, and protected routes.
+- **Dashboard:** Statistics and recent user information.
+- **User Management:** Search, city filtering, sorting, and pagination.
+- **API Integration:** Fetches user data from the DummyJSON public API.
+- **Settings:** Edit display name and email address, saved in localStorage.
+- **Responsive Design:** Layout adapts to desktop, tablet, and mobile screens.
+- **State Management:** React Context API for shared authentication and user data.
 
-## React Compiler
+## Technologies Used
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- Vite
+- React Router
+- Context API
+- JavaScript (ES6+)
+- CSS
+- DummyJSON API
+- Browser localStorage
 
-## Expanding the ESLint configuration
+## Installation and Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Padmaja200311/react-dashboard.git
+   ```
+
+2. Open the project folder:
+
+   ```bash
+   cd react-dashboard
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Open the local URL displayed in the terminal.
+
+## Demo Login
+
+- **Email:** admin@example.com
+- **Password:** admin123
+
+These are demo credentials for this project, not production authentication credentials.
+
+## API
+
+User data is fetched from:
+
+https://dummyjson.com/users?limit=0
+
+## Production Build
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+Preview the production build:
+
+```bash
+npm run preview
+```
+
+## Note
+
+This is a frontend assessment project. Authentication uses a demo login flow, and profile settings are stored in browser localStorage. It does not implement a secure backend authentication service.
