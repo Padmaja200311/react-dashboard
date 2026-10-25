@@ -5,19 +5,51 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("dashboardUser");
-    return savedUser ? JSON.parse(savedUser) : null;
+    try {
+      const savedUser = localStorage.getItem("dashboardUser");
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch {
+      localStorage.removeItem("dashboardUser");
+      return null;
+    }
   });
 
   function login(email, password) {
-    if (email === "admin@example.com" && password === "admin123") {
+    // Keep the existing demo login credentials.
+    if (
+      email === "admin@example.com" &&
+      password === "admin123"
+    ) {
       const userData = { email, name: "Admin" };
-      localStorage.setItem("dashboardUser", JSON.stringify(userData));
+
+      localStorage.setItem(
+        "dashboardUser",
+        JSON.stringify(userData)
+      );
+
       setUser(userData);
       return true;
     }
 
     return false;
+  }
+
+  function updateProfile(name, email) {
+    if (!user) return false;
+
+    const updatedUser = {
+      ...user,
+      name: name.trim(),
+      email: email.trim(),
+    };
+
+    localStorage.setItem(
+      "dashboardUser",
+      JSON.stringify(updatedUser)
+    );
+
+    setUser(updatedUser);
+    return true;
   }
 
   function logout() {
@@ -26,7 +58,9 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, updateProfile }}
+    >
       {children}
     </AuthContext.Provider>
   );

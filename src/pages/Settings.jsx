@@ -1,15 +1,41 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 export default function Settings() {
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
+
   const [name, setName] = useState(user?.name || "");
+  const [email, setEmail] = useState(user?.email || "");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    setName(user?.name || "");
+    setEmail(user?.email || "");
+  }, [user]);
 
   function handleSubmit(event) {
     event.preventDefault();
-    setMessage("Settings saved for this session.");
+
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+
+    if (!trimmedName || !trimmedEmail) {
+      setError("Name and email are required.");
+      setMessage("");
+      return;
+    }
+
+    const saved = updateProfile(trimmedName, trimmedEmail);
+
+    if (saved) {
+      setMessage("Profile updated successfully!");
+      setError("");
+    } else {
+      setError("Unable to update profile. Please log in again.");
+      setMessage("");
+    }
   }
 
   return (
@@ -28,11 +54,14 @@ export default function Settings() {
           <label htmlFor="profile-name">Display Name</label>
           <input
             id="profile-name"
+            type="text"
             value={name}
             onChange={(event) => {
               setName(event.target.value);
               setMessage("");
+              setError("");
             }}
+            maxLength={50}
             required
           />
 
@@ -40,13 +69,28 @@ export default function Settings() {
           <input
             id="profile-email"
             type="email"
-            value={user?.email || ""}
-            readOnly
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+              setMessage("");
+              setError("");
+            }}
+            required
           />
 
           <button type="submit">Save Settings</button>
 
-          {message && <p className="settings-message">{message}</p>}
+          {message && (
+            <p className="settings-message" role="status">
+              {message}
+            </p>
+          )}
+
+          {error && (
+            <p className="settings-message" role="alert">
+              {error}
+            </p>
+          )}
         </form>
       </section>
     </div>
